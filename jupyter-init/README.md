@@ -20,3 +20,12 @@ After this, the dir prepared for jupyter usage is `${MOUNT_POINT}/workspace`
 
 See [examples/](examples/)
 
+
+## Public image
+
+see https://hub.docker.com/r/nuxion/jupyter-init
+
+```
+docker pull nuxion/jupyter-init:0.1.0
+```
+

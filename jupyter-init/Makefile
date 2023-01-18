@@ -12,7 +12,7 @@ build-local:
 	docker build . -t ${DOCKERID}/${PROJECTNAME}
 
 build:
-	gcloud builds submit --region ${REGION} --tag $(REGISTRY)/${PROJECTNAME}:${VERSION} --ignore-file .gitignore
+	gcloud builds submit --region ${REGION} --tag ${REGISTRY}/${PROJECTNAME}:${VERSION} --ignore-file ../.gitignore
 
 
 publish: build-local
