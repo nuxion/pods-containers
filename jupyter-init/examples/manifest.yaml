@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-lab
+  labels:
+    app: example-lab
+  annotations:
+    kubectl.kubernetes.io/default-container: example-lab
+spec:
+  # check https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#configure-volume-permission-and-ownership-change-policy-for-pods
+  initContainers:
+    - name: volume-mount-hack
+      image: jupyter-init
+      env:
+        - name: GIT_REPO
+          value: "https://github.com/nuxion/cloudscripts"
+      command: ["bash", "-c", "/opt/scripts/init.sh"]
+      volumeMounts:
+        - name: ytb-storage
+          mountPath: /data
+  containers:
+    - name: example-lab
+      image: ${ZONE}-docker.pkg.dev/${PROJECTID}/docker-repo/example-lab:0.3.0
+      imagePullPolicy: "IfNotPresent"
+      command: ["bash", "-c", "jupyter-lab --ip=0.0.0.0 --port=8888 --notebook-dir=/data/workspace"]
+      ports:
+        - containerPort: 8888
+          name: kc-ytb-port
+      volumeMounts:
+        - name: ytb-storage
+          mountPath: /data
+  volumes:
+    - name: ytb-storage
+      persistentVolumeClaim:
+        claimName: example-lab-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-lab-svc
+  labels:
+    app: example-lab
+spec:
+  type: ClusterIP
+  ports:
+   - port: 80
+     # nodePort: 30156
+     targetPort: kc-ytb-port
+  selector:
+   app: example-lab
