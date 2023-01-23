@@ -12,8 +12,10 @@ COPY . .
 RUN apt-get update \
       && apt-get install pgbackrest ca-certificates --yes \
       && rm -rf /var/lib/apt/lists/* \
-      && cp /workspace/files/postgresql.conf /etc/postgresql/postgresql.conf 
-
+      && cp /workspace/files/postgresql.conf /etc/postgresql/postgresql.conf \
+      && mv /workspace/files/createdb /usr/local/bin \
+      && rm -Rf /workspace/*
+	
 WORKDIR /
 
 ENTRYPOINT ["docker-entrypoint.sh"]
