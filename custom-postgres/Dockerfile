@@ -12,4 +12,11 @@ COPY . .
 RUN apt-get update \
       && apt-get install pgbackrest ca-certificates --yes \
       && rm -rf /var/lib/apt/lists/* \
-      && cp /workspace/files/postgres.conf /etc/postgresql/postgresql.conf 
+      && cp /workspace/files/postgresql.conf /etc/postgresql/postgresql.conf 
+
+WORKDIR /
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+STOPSIGNAL SIGINT
+EXPOSE 5432
+CMD ["docker-entrypoint.sh", "postgres", "-c","config_file=/etc/postgresql/postgresql.conf"]
