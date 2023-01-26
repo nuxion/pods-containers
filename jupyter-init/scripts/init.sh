@@ -28,6 +28,7 @@ then
     echo "Running git"
     run_git 
 fi
-chown -R ${FINAL_UID}:${FINAL_GID} ${MOUNT_POINT}
+# if it fails changing permissions, the exit of the script should be 0
+chown --quiet -R ${FINAL_UID}:${FINAL_GID} ${MOUNT_POINT} || :
 
 
