@@ -6,10 +6,14 @@ FINAL_GID="${CUSTOM_GID:-1090}"
 
 run_git()
 {
+    # depends on the mounting method used,
+    # files could belong to different uid, but the source should be trusted.
+    git config --global --add safe.directory ${MOUNT_POINT}/workspace
     if [[ ! -z "${GIT_USERNAME}" ]];
     then
         git config --global credential.helper "/bin/bash /opt/scripts/credential_helper.sh"
     fi
+
 
     if [[ -d "${MOUNT_POINT}/workspace/.git/" ]];then
        git pull ${GIT_REPO}
