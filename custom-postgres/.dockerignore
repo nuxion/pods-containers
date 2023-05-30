@@ -1,4 +1,6 @@
 .git
 VERSION
 docker-entrypoint-initdb.d/
+scripts/
+README.md
 

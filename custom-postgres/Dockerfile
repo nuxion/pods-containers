@@ -1,5 +1,5 @@
 # Based on https://github.com/postgis/docker-postgis/blob/81a0b55/14-3.2/Dockerfile
-ARG IMAGE_VER=14.5-bullseye
+ARG IMAGE_VER=14.8-bullseye
 FROM postgres:${IMAGE_VER}
 LABEL name="PostgreSQL Container Images" \
       version="${IMAGE_VER}" \
@@ -10,7 +10,7 @@ WORKDIR /workspace
 COPY . .
 # ca-certificates package is needed for google apis interactions
 RUN apt-get update \
-      && apt-get install pgbackrest ca-certificates --yes \
+      && apt-get install pgbackrest ca-certificates postgresql-14-cron postgresql-14-pgvector  --yes \
       && rm -rf /var/lib/apt/lists/* \
       && cp /workspace/files/postgresql.conf /etc/postgresql/postgresql.conf \
       && mv /workspace/files/createdb /usr/local/bin \
