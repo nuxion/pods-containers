@@ -8,8 +8,7 @@ LOCAL_REGISTRY=registry.local:5000
 PG_VER=14.5
 
 debug:
-	echo "Not implemented"
-	exit 1
+	docker run --rm -it nuxion/custom-postgres bash
 
 build-local:
 	docker build . -t ${DOCKERID}/${PROJECTNAME}

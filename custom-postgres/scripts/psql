@@ -1,0 +1,3 @@
+#!/bin/bash
+IMAGE=nuxion/custom-postgres
+docker exec -it custom-postgres psql -U postgres
