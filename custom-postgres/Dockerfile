@@ -10,7 +10,11 @@ WORKDIR /workspace
 COPY . .
 # ca-certificates package is needed for google apis interactions
 RUN apt-get update \
-      && apt-get install pgbackrest ca-certificates --yes \
+      && apt-get install \
+	pgbackrest \
+	postgresql-14-cron \
+	postgresql-14-pgvector \
+	ca-certificates --yes \
       && rm -rf /var/lib/apt/lists/* \
       && cp /workspace/files/postgresql.conf /etc/postgresql/postgresql.conf \
       && mv /workspace/files/createdb /usr/local/bin \
